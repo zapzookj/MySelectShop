@@ -132,6 +132,7 @@ class UserProductMvcTest {
                 linkUrl,
                 lPrice
         );
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + mockPrincipal);
 
         String postInfo = objectMapper.writeValueAsString(requestDto);
 
