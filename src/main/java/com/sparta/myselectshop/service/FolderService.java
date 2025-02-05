@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class FolderService {
@@ -33,23 +35,12 @@ public class FolderService {
     }
 
     public List<FolderResponseDto> getFolders(User user) {
-        List<Folder> folderList = folderRepository.findAllByUser(user);
-        List<FolderResponseDto> responseDtoList = new ArrayList<>();
-
-        for (Folder folder : folderList) {
-            responseDtoList.add(new FolderResponseDto(folder));
-        }
-
-        return responseDtoList;
+        return folderRepository.findAllByUser(user).stream().map(FolderResponseDto::new).collect(Collectors.toList());
     }
 
     private boolean isExistFolderName(String folderName, List<Folder> existFolderList) {
         for (Folder existFolder : existFolderList) {
-            if(folderName.equals(existFolder.getName())){
-                return true;
-            }else{
-                return false;
-            }
+            return folderName.equals(existFolder.getName());
         }
         return false;
     }
