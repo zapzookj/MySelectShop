@@ -18,18 +18,14 @@ public class FolderService {
     private final FolderRepository folderRepository;
 
     public void addFolders(List<String> folderNames, User user) {
-        List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNames);
-
-        List<Folder> folderList = new ArrayList<>();
-
-        for (String folderName : folderNames) {
-            if(!isExistFolderName(folderName, existFolderList)){
-                Folder folder = new Folder(folderName, user);
-                folderList.add(folder);
-            }else{
-                throw new IllegalArgumentException("폴더명이 중복되었습니다.");
-            }
-        }
+        List<Folder> folderList = folderNames.stream()
+            .map(name -> {
+                if (folderRepository.existsByUserAndName(user, name)) {
+                    throw new IllegalArgumentException("폴더명이 중복되었습니다.");
+                }
+                return new Folder(name, user);
+            })
+            .collect(Collectors.toList());
 
         folderRepository.saveAll(folderList);
     }
