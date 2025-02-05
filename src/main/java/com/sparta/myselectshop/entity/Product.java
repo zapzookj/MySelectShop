@@ -52,8 +52,8 @@ public class Product extends Timestamped {
         this.user = user;
     }
 
-    public void update(ProductMypriceRequestDto requestDto) {
-        this.myprice = requestDto.getMyprice();
+    public void update(int myprice) {
+        this.myprice = myprice;
     }
 
     public void updateByItemDto(ItemDto itemDto) {

@@ -60,7 +60,7 @@ public class ProductService {
                 ))
         );
 
-        product.update(requestDto);
+        product.update(requestDto.getMyprice());
 
         return new ProductResponseDto(product);
     }
